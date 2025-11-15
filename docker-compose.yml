@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+  idp-api:
+    build: .
+    image: idp-service:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - SERVICE_ENV=prod
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./.env:/app/.env:ro
+      - ./data:/app/data
+    depends_on:
+      - duckdb
+  duckdb:
+    image: alpine
+    command: ["/bin/sh", "-c", "mkdir -p /data && tail -f /dev/null"]
+    volumes:
+      - ./data:/data
+volumes:
+  data:

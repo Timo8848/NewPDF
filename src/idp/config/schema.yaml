@@ -1,0 +1,45 @@
+version: 1
+fields:
+  - name: document_type
+    type: category
+    values: [invoice, tax_form, id_card]
+  - name: invoice_number
+    type: string
+    patterns: ["^INV[- ]?[0-9A-Za-z]+$"]
+  - name: invoice_date
+    type: date
+  - name: due_date
+    type: date
+  - name: subtotal_amount
+    type: amount
+  - name: tax_amount
+    type: amount
+  - name: total_amount
+    type: amount
+  - name: vendor_name
+    type: string
+  - name: vendor_address
+    type: string
+  - name: customer_name
+    type: string
+  - name: customer_address
+    type: string
+  - name: tax_id
+    type: string
+    patterns: ["^[0-9A-Za-z-]{9,15}$"]
+  - name: bank_account
+    type: string
+    patterns: ["^[0-9]{6,20}$"]
+  - name: routing_number
+    type: string
+    patterns: ["^[0-9]{9}$"]
+  - name: id_number
+    type: string
+  - name: expiry_date
+    type: date
+  - name: birth_date
+    type: date
+  - name: mrz_line1
+    type: string
+  - name: mrz_line2
+    type: string

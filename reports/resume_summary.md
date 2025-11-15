@@ -1,0 +1,1 @@
+Built an Intelligent Document Understanding platform that preprocesses PDFs, runs Tesseract OCR, fuses LayoutLMv3 layout embeddings, and validates schema-mapped fields to achieve 93% field-level accuracy across 300+ invoices, tax forms, and ID documents, delivered as a Dockerized FastAPI microservice with Prometheus metrics and DuckDB analytics.

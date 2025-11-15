@@ -1,0 +1,26 @@
+{
+  "request_id": "demo-tax",
+  "documents": [
+    {
+      "doc_type": "tax_form",
+      "fields": {
+        "tax_id": {"value": "98-7654321", "confidence": 0.92, "valid": true},
+        "total_amount": {"value": "18500.00", "confidence": 0.87, "valid": true},
+        "tax_amount": {"value": "1850.00", "confidence": 0.85, "valid": true},
+        "customer_name": {"value": "Contour Analytics LLC", "confidence": 0.81, "valid": true},
+        "routing_number": {"value": "021000021", "confidence": 0.83, "valid": true}
+      },
+      "validation_summary": {
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "metrics": {
+    "processing_time_ms": 2480,
+    "ocr_avg_confidence": 0.9
+  },
+  "analytics": {
+    "top_failures": []
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "request_id": "demo-invoice",
+  "documents": [
+    {
+      "doc_type": "invoice",
+      "fields": {
+        "invoice_number": {"value": "INV-10023", "confidence": 0.97, "valid": true},
+        "invoice_date": {"value": "2024-03-12", "confidence": 0.91, "valid": true},
+        "due_date": {"value": "2024-04-11", "confidence": 0.88, "valid": true},
+        "subtotal_amount": {"value": "1299.34", "confidence": 0.9, "valid": true},
+        "tax_amount": {"value": "103.95", "confidence": 0.86, "valid": true},
+        "total_amount": {"value": "1403.29", "confidence": 0.94, "valid": true},
+        "tax_id": {"value": "12-3456789", "confidence": 0.76, "valid": true},
+        "bank_account": {"value": "9876543210", "confidence": 0.71, "valid": true}
+      },
+      "validation_summary": {
+        "errors": [],
+        "warnings": []
+      }
+    }
+  ],
+  "metrics": {
+    "processing_time_ms": 2130,
+    "ocr_avg_confidence": 0.92
+  },
+  "analytics": {
+    "top_failures": []
+  }
+}
