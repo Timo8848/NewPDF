@@ -38,16 +38,16 @@ class ExtractionResult:
 _PATTERNS: Dict[str, tuple[str, float]] = {
     "invoice_number": (r"invoice\s*(?:no\.?|number|#)\s*[:\-]?\s*([A-Za-z0-9\-]+)", 0.85),
     "invoice_date": (
-        r"invoice\s*date\s*[:\-]?\s*([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",
+        r"(?:invoice\s*)?date\s*[:\-]?\s*([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",
         0.8,
     ),
     "due_date": (
         r"due\s*date\s*[:\-]?\s*([0-9]{4}-[0-9]{2}-[0-9]{2}|[0-9]{1,2}/[0-9]{1,2}/[0-9]{2,4})",
         0.8,
     ),
-    "subtotal_amount": (r"sub[\s\-]?total\s*[:\-]?\s*\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.8),
-    "tax_amount": (r"\btax\s*(?:amount)?\s*[:\-]?\s*\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.75),
-    "total_amount": (r"\btotal\s*(?:due|amount)?\s*[:\-]?\s*\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.85),
+    "subtotal_amount": (r"sub[\s\-]?total\s*[:\-]?\s*(?:[A-Z]{1,3}\s*)?\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.8),
+    "tax_amount": (r"\btax\s*(?:amount)?\s*[:\-]?\s*(?:[A-Z]{1,3}\s*)?\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.75),
+    "total_amount": (r"(?<!ub )\btotal\s*(?:due|amount)?\s*[:\-]?\s*(?:[A-Z]{1,3}\s*)?\$?\s*([0-9][0-9,]*\.?[0-9]*)", 0.85),
     "tax_id": (r"tax\s*(?:id|number)\s*[:\-]?\s*([0-9A-Za-z\-]{9,15})", 0.7),
     "routing_number": (r"routing\s*(?:no\.?|number)\s*[:\-]?\s*([0-9]{9})\b", 0.8),
     "bank_account": (r"account\s*(?:number|no\.?)\s*[:\-]?\s*([0-9]{6,20})\b", 0.7),
