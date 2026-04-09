@@ -1,62 +1,115 @@
-# Intelligent Document Understanding System Architecture
+# IDP Architecture
 
-## Overview
-This project implements an end-to-end Intelligent Document Processing (IDP) pipeline targeting financial and identity PDFs (invoices, tax returns, ID scans). The pipeline combines deterministic preprocessing, OCR, layout-aware vision-language modeling, rule-based and statistical validation, and a production-ready FastAPI deployment surface.
+## Scope
+
+This service extracts structured fields from PDFs of invoices and ID
+documents. It is intentionally rule-based: Tesseract OCR feeds an anchor
+regex extractor, then a validator catches obvious inconsistencies. There is
+no learned model in the pipeline.
 
 ```
-PDF -> Preprocess -> OCR -> Layout-Aware Transformer -> Field Schema -> Validation -> Analytics -> API Response
+PDF → Preprocess → OCR → Heuristic Extractor → Validator → Analytics → API Response
 ```
 
 ## Components
 
-### 1. Preprocessing & OCR Layer
-- **Preprocessing:** Deskew, denoise, binarize, and split PDFs into page images using PDFium (via `pdf2image`) and OpenCV.
-- **OCR:** Tesseract 5 accessed through `pytesseract`. Produces text, word-level bounding boxes, and confidence per token.
-- **Outputs:** Normalized page images, OCR TSV/JSON, and metadata required for downstream layout models.
+### 1. Preprocessing (`idp.ocr.preprocess`)
 
-### 2. Vision-Language Extraction Layer
-- **Layout Model:** Configurable to use Hugging Face `microsoft/layoutlmv3-base` or `doctr` detection/recognition heads.
-- **Feature Fusion:** Combines OCR tokens with layout embeddings, bounding boxes, and vision backbone features.
-- **Schema Mapping:** Maps detected entities (names, addresses, invoice totals, tax IDs, bank details, MRZ) to canonical schema defined in `src/idp/config/schema.yaml`.
-- **Confidence:** Emits per-field confidence, bounding boxes, and provenance (page, token indices).
+- `pdf2image.convert_from_path` renders each page to a PIL image at a
+  configurable DPI (default 300).
+- Each page is converted to grayscale, median-blurred (denoise),
+  deskewed via `cv2.minAreaRect`, and adaptively thresholded.
+- All intermediate PNGs live in a caller-managed `TemporaryDirectory` and
+  are cleaned up automatically when the request finishes.
 
-### 3. Post-Processing & Validation
-- **Regex Validation:** Dates, amounts, IDs, MRZ patterns, tax IDs, and routing numbers.
-- **Cross-Field Checks:** Subtotal + tax = total, invoice date ≤ due date, ID expiry ≥ issue date, totals align with line items.
-- **Normalization:** Standardizes numbers (decimal separators, thousand delimiters) and date formats (ISO-8601).
-- **SQL Analytics:** Persists extraction summaries into DuckDB for GROUP BY / HAVING anomaly detection and quality reporting.
+### 2. OCR (`idp.ocr.tesseract_engine`)
 
-### 4. Monitoring & Reporting
-- **Metrics:** Prometheus-style counters/histograms exposed at `/metrics` (request latency, validation failures, OCR confidence).
-- **Tracing & Logging:** Structured JSON logs with request IDs and correlation IDs. OpenTelemetry hooks ready for vendor export.
-- **Performance Report:** `reports/performance.md` tracks accuracy, error classes, confusion, and remediation backlog.
+- `pytesseract.image_to_data` returns word-level rows; we keep the text,
+  bounding box, confidence, and page number per token.
+- Output is a single `OCRResult` aggregating all pages.
 
-### 5. FastAPI Microservice & Deployment
-- **Endpoints:** `/extract` (multipart PDF upload), `/health`, `/metrics` (Prometheus text format).
-- **Models:** Pydantic request/response models with field-level metadata and validation status.
-- **Containerization:** Dockerfile with multi-stage build, optional GPU acceleration via `--build-arg ENABLE_GPU=true`. `docker-compose.yml` wires service + DuckDB volume + Prometheus.
-- **Configuration:** `.env` + `config/settings.yaml` for runtime toggles (OCR language packs, selected layout model, validation thresholds).
+### 3. Heuristic extractor (`idp.models.extractor`)
 
-## Data Flow
-1. Upload PDF → stored as temp artifact.
-2. Preprocessing converts PDF pages to normalized PNGs.
-3. OCR generates tokens and bounding boxes.
-4. Layout model ingests page images + OCR features to predict key-value pairs.
-5. Post-processing validates, normalizes, and reconciles fields.
-6. Persist summary to DuckDB and return JSON response with confidence, validation flags, and provenance.
+- A small dictionary of `(name → (regex, confidence))` pairs anchored on
+  label text such as `Invoice Number:`, `Subtotal:`, `Routing Number:`.
+- MRZ lines are detected with a separate regex that accepts the three
+  ICAO-standard lengths (30 / 36 / 44).
+- Document type is inferred from anchor keywords plus the presence of
+  an MRZ line.
 
-## Scalability & Accuracy Strategy
-- Batch inference with asynchronous task queue (FastAPI background tasks / Celery ready hook).
-- Caching OCR outputs for re-uploads via SHA256 hash.
-- Active learning hooks to push low-confidence fields to `reports/error_cases/` for manual labeling.
-- Targeting ≥90% field-level accuracy across 300+ labeled docs via data augmentation, schema-specific regex, and high-recall detection + strict validation.
+### 4. Validation (`idp.postprocess.validators`)
 
-## Security & Compliance
-- Temporary storage with auto-cleanup.
-- Redacted logging (mask PII fields).
-- Configurable S3-compatible storage for input/output artifacts.
+- **Format checks** for invoice number, tax ID, routing/account number, ID
+  number.
+- **Cross-field checks**:
+  - `|subtotal + tax − total| ≤ tolerance` (default `0.02`, configurable
+    in `ValidationSettings.total_tolerance`).
+  - `invoice_date ≤ due_date` (warning, not error).
+  - `birth_date ≤ expiry_date`.
+- Normalisers parse decimal amounts and ISO/`d/m/y`/`m/d/y` dates.
 
-## Next Steps
-- Add GPU-enabled inference container image.
-- Integrate human-in-the-loop review UI.
-- Expand test suite with synthetic PDFs covering multilingual edge cases.
+### 5. Analytics (`idp.postprocess.analytics`)
+
+- A single DuckDB connection per process (`get_connection`) with
+  `init_schema` called once at FastAPI startup.
+- `persist_run` inserts one row per extracted field per request.
+- `aggregate_failures` returns the top-N invalid field names via a
+  `GROUP BY` over the same table — used to populate the `analytics` block
+  in the API response.
+
+### 6. Service layer (`idp.api.main`, `idp.services.pipeline`)
+
+- FastAPI `lifespan` instantiates the `ExtractionPipeline` and opens the
+  DuckDB connection on startup; the connection is closed on shutdown.
+- `/extract` saves the upload to a `NamedTemporaryFile`, runs the
+  pipeline, and removes the temp file in `finally`.
+- Prometheus metrics:
+  - `idp_extraction_latency_ms` histogram
+  - `idp_validation_failures_total{field}` counter
+  - `idp_documents_processed_total{doc_type}` counter
+- Structured JSON logs via `structlog` with a `traced` context manager
+  per request.
+
+## Evaluation
+
+`scripts/eval.py` is the only source of truth for accuracy numbers:
+
+1. `tests/fixtures/synthetic.py` deterministically renders invoices and
+   ID cards as PNGs with a TrueType font. Each sample comes paired with
+   its ground-truth field dictionary.
+2. The harness runs the production OCR + extractor + validators on every
+   sample and compares predictions to ground truth.
+3. Per-field TP/FP/FN are aggregated into precision/recall/F1, written to
+   `reports/eval_results.json` and `reports/eval_results.md`.
+4. CI runs the harness on every push and uploads the results as an
+   artifact.
+
+This eval is an **upper bound**: it isolates the regex extractor's
+correctness against clean synthetic OCR. It does not measure real-world
+OCR error tolerance. Replacing the synthetic dataset with a labeled
+corpus is the top item on the roadmap.
+
+## Configuration
+
+`Settings` (Pydantic) bundles:
+
+- `OCRSettings` — tesseract binary path, languages, DPI.
+- `ValidationSettings` — tolerance, enforce flags, min confidence.
+- `StorageSettings` — DuckDB path.
+- `ServiceSettings` — environment, log level, metrics toggle.
+
+Defaults are sensible for local dev; override via env or `.env`.
+
+## What was removed in v0.2
+
+The previous architecture document advertised a LayoutLMv3 / DocTR
+extractor that the actual code never executed (the model object was
+loaded, then ignored, and the pipeline ran the heuristic parser
+unconditionally). The unused imports, dependencies (`torch`,
+`torchvision`, `transformers`, `sentencepiece`, `doctr`), and
+`LayoutModelSettings` were all deleted in the v0.2 refactor. The
+`models/` package now contains only the heuristic extractor.
+
+If a layout-aware model is reintroduced in the future it will be wired
+into a real `extract()` path with measured contribution in the eval
+report — see `REFACTOR_NOTES.md` for the rationale.

@@ -1,0 +1,1576 @@
+{
+  "n_samples": 30,
+  "per_field": {
+    "bank_account": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "birth_date": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "due_date": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "expiry_date": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "id_number": {
+      "tp": 10,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "invoice_date": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "invoice_number": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "mrz_line1": {
+      "tp": 0,
+      "fp": 10,
+      "fn": 0,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    "routing_number": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "subtotal_amount": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "tax_amount": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "tax_id": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    },
+    "total_amount": {
+      "tp": 20,
+      "fp": 0,
+      "fn": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0
+    }
+  },
+  "micro": {
+    "precision": 0.955,
+    "recall": 1.0,
+    "f1": 0.977
+  },
+  "samples": [
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_000.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-07-02",
+          "pred": "2024-07-02",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-05-17",
+          "pred": "2024-05-17",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "4119.10",
+          "pred": "4119.10",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "305.12",
+          "pred": "305.12",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "941597326",
+          "pred": "941597326",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-60494",
+          "pred": "inv-60494",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "72-7793667",
+          "pred": "72-7793667",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "3813.98",
+          "pred": "3813.98",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "8859158368",
+          "pred": "8859158368",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_001.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-02-09",
+          "pred": "2024-02-09",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-02-16",
+          "pred": "2024-02-16",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "3120.23",
+          "pred": "3120.23",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "231.13",
+          "pred": "231.13",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "799642630",
+          "pred": "799642630",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-27611",
+          "pred": "inv-27611",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "67-8922960",
+          "pred": "67-8922960",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "2889.10",
+          "pred": "2889.10",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "1901749037",
+          "pred": "1901749037",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_002.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-06-27",
+          "pred": "2024-06-27",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-03-24",
+          "pred": "2024-03-24",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "592.67",
+          "pred": "592.67",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "43.90",
+          "pred": "43.90",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "370135510",
+          "pred": "370135510",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-17412",
+          "pred": "inv-17412",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "95-6169671",
+          "pred": "95-6169671",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "548.77",
+          "pred": "548.77",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "3602510382",
+          "pred": "3602510382",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_003.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-03-12",
+          "pred": "2024-03-12",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-10-16",
+          "pred": "2024-10-16",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "3244.26",
+          "pred": "3244.26",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "240.32",
+          "pred": "240.32",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "750257551",
+          "pred": "750257551",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-41190",
+          "pred": "inv-41190",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "90-2099391",
+          "pred": "90-2099391",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "3003.94",
+          "pred": "3003.94",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "8891869609",
+          "pred": "8891869609",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_004.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-12-13",
+          "pred": "2024-12-13",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-08-05",
+          "pred": "2024-08-05",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "1713.05",
+          "pred": "1713.05",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "126.89",
+          "pred": "126.89",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "121278532",
+          "pred": "121278532",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-40939",
+          "pred": "inv-40939",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "21-2115938",
+          "pred": "21-2115938",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "1586.16",
+          "pred": "1586.16",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "9237554185",
+          "pred": "9237554185",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_005.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-06-26",
+          "pred": "2024-06-26",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-12-27",
+          "pred": "2024-12-27",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "1459.81",
+          "pred": "1459.81",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "108.13",
+          "pred": "108.13",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "131144123",
+          "pred": "131144123",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-91644",
+          "pred": "inv-91644",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "93-9892593",
+          "pred": "93-9892593",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "1351.68",
+          "pred": "1351.68",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "8904235007",
+          "pred": "8904235007",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_006.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-08-25",
+          "pred": "2024-08-25",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-05-02",
+          "pred": "2024-05-02",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "4457.78",
+          "pred": "4457.78",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "330.21",
+          "pred": "330.21",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "811696013",
+          "pred": "811696013",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-85211",
+          "pred": "inv-85211",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "10-3442393",
+          "pred": "10-3442393",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "4127.57",
+          "pred": "4127.57",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "7813898703",
+          "pred": "7813898703",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_007.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-07-21",
+          "pred": "2024-07-21",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-01-03",
+          "pred": "2024-01-03",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "5124.10",
+          "pred": "5124.10",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "379.56",
+          "pred": "379.56",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "492655486",
+          "pred": "492655486",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-52445",
+          "pred": "inv-52445",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "78-2579240",
+          "pred": "78-2579240",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "4744.54",
+          "pred": "4744.54",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "3503055453",
+          "pred": "3503055453",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_008.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-07-05",
+          "pred": "2024-07-05",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-04-23",
+          "pred": "2024-04-23",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "2068.22",
+          "pred": "2068.22",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "153.20",
+          "pred": "153.20",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "246934068",
+          "pred": "246934068",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-39714",
+          "pred": "inv-39714",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "15-2429171",
+          "pred": "15-2429171",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "1915.02",
+          "pred": "1915.02",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "6194323272",
+          "pred": "6194323272",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_009.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-05-05",
+          "pred": "2024-05-05",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-03-28",
+          "pred": "2024-03-28",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "3353.13",
+          "pred": "3353.13",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "248.38",
+          "pred": "248.38",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "463274253",
+          "pred": "463274253",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-70687",
+          "pred": "inv-70687",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "96-1107962",
+          "pred": "96-1107962",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "3104.75",
+          "pred": "3104.75",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "7454399878",
+          "pred": "7454399878",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_010.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-08-19",
+          "pred": "2024-08-19",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-01-07",
+          "pred": "2024-01-07",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "280.44",
+          "pred": "280.44",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "20.77",
+          "pred": "20.77",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "984321821",
+          "pred": "984321821",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-84894",
+          "pred": "inv-84894",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "69-9242586",
+          "pred": "69-9242586",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "259.67",
+          "pred": "259.67",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "4481581187",
+          "pred": "4481581187",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_011.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-08-15",
+          "pred": "2024-08-15",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-09-28",
+          "pred": "2024-09-28",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "4689.51",
+          "pred": "4689.51",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "347.37",
+          "pred": "347.37",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "298277534",
+          "pred": "298277534",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-69294",
+          "pred": "inv-69294",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "85-4186027",
+          "pred": "85-4186027",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "4342.14",
+          "pred": "4342.14",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "1799609893",
+          "pred": "1799609893",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_012.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-09-22",
+          "pred": "2024-09-22",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-06-05",
+          "pred": "2024-06-05",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "1531.53",
+          "pred": "1531.53",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "113.45",
+          "pred": "113.45",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "502389572",
+          "pred": "502389572",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-72202",
+          "pred": "inv-72202",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "58-1182207",
+          "pred": "58-1182207",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "1418.08",
+          "pred": "1418.08",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "7367455714",
+          "pred": "7367455714",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_013.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-11-26",
+          "pred": "2024-11-26",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-03-21",
+          "pred": "2024-03-21",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "1646.69",
+          "pred": "1646.69",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "121.98",
+          "pred": "121.98",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "341766856",
+          "pred": "341766856",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-43948",
+          "pred": "inv-43948",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "39-3468933",
+          "pred": "39-3468933",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "1524.71",
+          "pred": "1524.71",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "1804765948",
+          "pred": "1804765948",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_014.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-11-17",
+          "pred": "2024-11-17",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-04-09",
+          "pred": "2024-04-09",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "3367.23",
+          "pred": "3367.23",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "249.42",
+          "pred": "249.42",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "888190243",
+          "pred": "888190243",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-24002",
+          "pred": "inv-24002",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "42-5882438",
+          "pred": "42-5882438",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "3117.81",
+          "pred": "3117.81",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "9901860348",
+          "pred": "9901860348",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_015.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-12-02",
+          "pred": "2024-12-02",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-03-08",
+          "pred": "2024-03-08",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "169.68",
+          "pred": "169.68",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "12.57",
+          "pred": "12.57",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "964227266",
+          "pred": "964227266",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-37391",
+          "pred": "inv-37391",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "12-1921878",
+          "pred": "12-1921878",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "157.11",
+          "pred": "157.11",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "3926378837",
+          "pred": "3926378837",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_016.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-05-14",
+          "pred": "2024-05-14",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-04-15",
+          "pred": "2024-04-15",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "2591.13",
+          "pred": "2591.13",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "191.94",
+          "pred": "191.94",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "806206253",
+          "pred": "806206253",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-57385",
+          "pred": "inv-57385",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "10-7870533",
+          "pred": "10-7870533",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "2399.19",
+          "pred": "2399.19",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "8348695302",
+          "pred": "8348695302",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_017.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-05-12",
+          "pred": "2024-05-12",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-05-06",
+          "pred": "2024-05-06",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "2299.77",
+          "pred": "2299.77",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "170.35",
+          "pred": "170.35",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "218285593",
+          "pred": "218285593",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-78417",
+          "pred": "inv-78417",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "79-5668705",
+          "pred": "79-5668705",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "2129.42",
+          "pred": "2129.42",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "4940602561",
+          "pred": "4940602561",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_018.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-08-11",
+          "pred": "2024-08-11",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-04-07",
+          "pred": "2024-04-07",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "757.94",
+          "pred": "757.94",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "56.14",
+          "pred": "56.14",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "296466988",
+          "pred": "296466988",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-33758",
+          "pred": "inv-33758",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "72-9288526",
+          "pred": "72-9288526",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "701.80",
+          "pred": "701.80",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "7355574674",
+          "pred": "7355574674",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": [
+        {
+          "field": "due_date",
+          "message": "Due date earlier than invoice date",
+          "level": "warning"
+        }
+      ]
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/invoice_019.png",
+      "doc_type_predicted": "invoice",
+      "doc_type_truth": "invoice",
+      "fields": {
+        "invoice_date": {
+          "gt": "2024-09-04",
+          "pred": "2024-09-04",
+          "status": "tp"
+        },
+        "due_date": {
+          "gt": "2024-09-07",
+          "pred": "2024-09-07",
+          "status": "tp"
+        },
+        "total_amount": {
+          "gt": "336.90",
+          "pred": "336.90",
+          "status": "tp"
+        },
+        "tax_amount": {
+          "gt": "24.96",
+          "pred": "24.96",
+          "status": "tp"
+        },
+        "routing_number": {
+          "gt": "668223019",
+          "pred": "668223019",
+          "status": "tp"
+        },
+        "invoice_number": {
+          "gt": "inv-98752",
+          "pred": "inv-98752",
+          "status": "tp"
+        },
+        "tax_id": {
+          "gt": "60-6824526",
+          "pred": "60-6824526",
+          "status": "tp"
+        },
+        "subtotal_amount": {
+          "gt": "311.94",
+          "pred": "311.94",
+          "status": "tp"
+        },
+        "bank_account": {
+          "gt": "2121323946",
+          "pred": "2121323946",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_000.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-02-13",
+          "pred": "2030-02-13",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-915117",
+          "pred": "id-915117",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-07-22",
+          "pred": "1990-07-22",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_001.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-04-28",
+          "pred": "2030-04-28",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-935349",
+          "pred": "id-935349",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-01-25",
+          "pred": "1990-01-25",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_002.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-04-05",
+          "pred": "2030-04-05",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-646253",
+          "pred": "id-646253",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-10-14",
+          "pred": "1990-10-14",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_003.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-04-24",
+          "pred": "2030-04-24",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-621500",
+          "pred": "id-621500",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-09-12",
+          "pred": "1990-09-12",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_004.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-10-18",
+          "pred": "2030-10-18",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-541581",
+          "pred": "id-541581",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-02-24",
+          "pred": "1990-02-24",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_005.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-07-19",
+          "pred": "2030-07-19",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-606577",
+          "pred": "id-606577",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-07-18",
+          "pred": "1990-07-18",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_006.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-08-01",
+          "pred": "2030-08-01",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-463457",
+          "pred": "id-463457",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-01-08",
+          "pred": "1990-01-08",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_007.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-10-06",
+          "pred": "2030-10-06",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-997517",
+          "pred": "id-997517",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-01-26",
+          "pred": "1990-01-26",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_008.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-02-23",
+          "pred": "2030-02-23",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-645074",
+          "pred": "id-645074",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-08-11",
+          "pred": "1990-08-11",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    },
+    {
+      "image": "/var/folders/s3/8gwd_tbx177gpykw1s8qn0nm0000gn/T/idp_eval_4elwzies/id_009.png",
+      "doc_type_predicted": "id_card",
+      "doc_type_truth": "id_card",
+      "fields": {
+        "expiry_date": {
+          "gt": "2030-02-24",
+          "pred": "2030-02-24",
+          "status": "tp"
+        },
+        "mrz_line1": {
+          "gt": "",
+          "pred": "p<exajohn<doe<<<<<<<<<<<<<<<<<",
+          "status": "spurious"
+        },
+        "id_number": {
+          "gt": "id-288945",
+          "pred": "id-288945",
+          "status": "tp"
+        },
+        "birth_date": {
+          "gt": "1990-01-16",
+          "pred": "1990-01-16",
+          "status": "tp"
+        }
+      },
+      "validation_errors": [],
+      "validation_warnings": []
+    }
+  ]
+}

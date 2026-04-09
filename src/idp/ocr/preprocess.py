@@ -1,10 +1,16 @@
+"""PDF → preprocessed page image conversion.
+
+All intermediate files live inside a caller-managed `TemporaryDirectory`. The
+previous implementation wrote PNGs into the user's upload directory and never
+cleaned them up; the new version returns paths inside `work_dir` and lets the
+caller decide when to delete them.
+"""
 from __future__ import annotations
 
 import hashlib
-import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable, List, Tuple
+from typing import Iterable, List
 
 import cv2
 import numpy as np
@@ -26,27 +32,33 @@ class PreprocessResult:
     metadata: dict
 
 
-def convert_pdf_to_images(pdf_path: Path, config: PreprocessConfig) -> List[Path]:
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        pil_images = convert_from_path(str(pdf_path), dpi=config.dpi)
-        image_paths: List[Path] = []
-        for idx, img in enumerate(pil_images):
-            if config.max_pages and idx >= config.max_pages:
-                break
-            out_path = Path(tmp_dir) / f"page_{idx}.png"
-            img.save(out_path, format="PNG")
-            processed = preprocess_image(out_path, config)
-            image_paths.append(processed)
-        # convert_from_path temp dir deleted here, so copy files elsewhere
-        final_paths: List[Path] = []
-        for path in image_paths:
-            new_path = pdf_path.parent / f"{pdf_path.stem}_page{len(final_paths)}.png"
-            new_path.write_bytes(Path(path).read_bytes())
-            final_paths.append(new_path)
-        return final_paths
+def preprocess_pdf(
+    pdf_path: Path,
+    work_dir: Path,
+    config: PreprocessConfig | None = None,
+) -> PreprocessResult:
+    """Render every page of `pdf_path` to a preprocessed PNG inside `work_dir`."""
+    cfg = config or PreprocessConfig()
+    work_dir.mkdir(parents=True, exist_ok=True)
+    pages = convert_from_path(str(pdf_path), dpi=cfg.dpi)
+
+    image_paths: List[Path] = []
+    for idx, pil_image in enumerate(pages):
+        if cfg.max_pages is not None and idx >= cfg.max_pages:
+            break
+        out_path = work_dir / f"{pdf_path.stem}_page{idx}.png"
+        pil_image.save(out_path, format="PNG")
+        preprocess_image(out_path, cfg)
+        image_paths.append(out_path)
+
+    return PreprocessResult(
+        images=image_paths,
+        metadata={"page_count": len(image_paths), "checksum": checksum(image_paths)},
+    )
 
 
 def preprocess_image(image_path: Path, config: PreprocessConfig) -> Path:
+    """In-place preprocess of a single PNG (grayscale → denoise → deskew → binarize)."""
     image = cv2.imread(str(image_path), cv2.IMREAD_COLOR)
     if image is None:
         raise FileNotFoundError(image_path)
@@ -54,10 +66,8 @@ def preprocess_image(image_path: Path, config: PreprocessConfig) -> Path:
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
     if config.denoise:
         gray = cv2.medianBlur(gray, 3)
-
     if config.deskew:
         gray = _deskew(gray)
-
     if config.binarize:
         gray = cv2.adaptiveThreshold(
             gray,
@@ -82,7 +92,7 @@ def _deskew(gray: np.ndarray) -> np.ndarray:
         angle = -(90 + angle)
     else:
         angle = -angle
-    (h, w) = gray.shape[:2]
+    h, w = gray.shape[:2]
     center = (w // 2, h // 2)
     M = cv2.getRotationMatrix2D(center, angle, 1.0)
     return cv2.warpAffine(gray, M, (w, h), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REPLICATE)
@@ -91,20 +101,5 @@ def _deskew(gray: np.ndarray) -> np.ndarray:
 def checksum(paths: Iterable[Path]) -> str:
     digest = hashlib.sha256()
     for path in sorted(paths):
-        digest.update(path.read_bytes())
+        digest.update(Path(path).read_bytes())
     return digest.hexdigest()
-
-
-def preprocess_pdf(pdf_path: Path, config: PreprocessConfig | None = None) -> PreprocessResult:
-    cfg = config or PreprocessConfig()
-    pages = convert_from_path(str(pdf_path), dpi=cfg.dpi)
-    image_paths: List[Path] = []
-    for idx, img in enumerate(pages):
-        if cfg.max_pages and idx >= cfg.max_pages:
-            break
-        tmp = Path(tempfile.mkstemp(suffix=".png")[1])
-        img.save(tmp, format="PNG")
-        processed = preprocess_image(tmp, cfg)
-        image_paths.append(processed)
-    meta = {"page_count": len(image_paths), "checksum": checksum(image_paths)}
-    return PreprocessResult(images=image_paths, metadata=meta)

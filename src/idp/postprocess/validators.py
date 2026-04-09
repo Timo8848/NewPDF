@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from decimal import Decimal
 from typing import Dict, List
 
+from idp.config import get_settings
 from idp.postprocess.normalizers import normalize_amount, normalize_date
 
 
@@ -25,43 +26,57 @@ class ValidationSummary:
         return not self.errors
 
 
+_REGEX_RULES = {
+    "invoice_number": r"^INV[\- ]?[0-9A-Za-z]+$",
+    "tax_id": r"^[0-9A-Za-z\-]{9,15}$",
+    "routing_number": r"^[0-9]{9}$",
+    "bank_account": r"^[0-9]{6,20}$",
+    "id_number": r"^[0-9A-Za-z\-]+$",
+}
+
+
 def regex_validations(fields: Dict[str, str]) -> List[ValidationMessage]:
-    rules = {
-        "invoice_number": r"^INV[- ]?[0-9A-Za-z]+$",
-        "tax_id": r"^[0-9A-Za-z-]{9,15}$",
-        "routing_number": r"^[0-9]{9}$",
-        "bank_account": r"^[0-9]{6,20}$",
-        "id_number": r"^[0-9A-Za-z-]+$",
-    }
     messages: List[ValidationMessage] = []
-    for field, pattern in rules.items():
-        value = fields.get(field)
+    for field_name, pattern in _REGEX_RULES.items():
+        value = fields.get(field_name)
         if not value:
             continue
         if not re.match(pattern, str(value)):
-            messages.append(ValidationMessage(field=field, message="Regex validation failed"))
+            messages.append(
+                ValidationMessage(field=field_name, message=f"Regex validation failed for value {value!r}")
+            )
     return messages
 
 
 def cross_field_checks(fields: Dict[str, str]) -> List[ValidationMessage]:
     messages: List[ValidationMessage] = []
+    settings = get_settings()
+    tolerance = Decimal(settings.validation.total_tolerance)
+
     subtotal = normalize_amount(fields.get("subtotal_amount"))
     tax = normalize_amount(fields.get("tax_amount"))
     total = normalize_amount(fields.get("total_amount"))
     if subtotal is not None and tax is not None and total is not None:
-        if subtotal + tax != total:
+        diff = abs((subtotal + tax) - total)
+        if diff > tolerance:
             messages.append(
                 ValidationMessage(
                     field="total_amount",
-                    message=f"subtotal ({subtotal}) + tax ({tax}) != total ({total})",
+                    message=f"subtotal ({subtotal}) + tax ({tax}) != total ({total}); diff={diff}",
                 )
             )
+
     invoice_date = normalize_date(fields.get("invoice_date"))
     due_date = normalize_date(fields.get("due_date"))
     if invoice_date and due_date and invoice_date > due_date:
         messages.append(
-            ValidationMessage(field="due_date", message="Due date earlier than invoice date", level="warning")
+            ValidationMessage(
+                field="due_date",
+                message="Due date earlier than invoice date",
+                level="warning",
+            )
         )
+
     expiry = normalize_date(fields.get("expiry_date"))
     birth = normalize_date(fields.get("birth_date"))
     if expiry and birth and expiry < birth:
@@ -71,6 +86,7 @@ def cross_field_checks(fields: Dict[str, str]) -> List[ValidationMessage]:
 
 def validate_fields(fields: Dict[str, str]) -> ValidationSummary:
     errors = regex_validations(fields)
-    errors.extend([m for m in cross_field_checks(fields) if m.level == "error"])
-    warnings = [m for m in cross_field_checks(fields) if m.level == "warning"]
+    cross = cross_field_checks(fields)
+    errors.extend([m for m in cross if m.level == "error"])
+    warnings = [m for m in cross if m.level == "warning"]
     return ValidationSummary(errors=errors, warnings=warnings)

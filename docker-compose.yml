@@ -9,14 +9,4 @@ services:
       - SERVICE_ENV=prod
       - LOG_LEVEL=INFO
     volumes:
-      - ./.env:/app/.env:ro
       - ./data:/app/data
-    depends_on:
-      - duckdb
-  duckdb:
-    image: alpine
-    command: ["/bin/sh", "-c", "mkdir -p /data && tail -f /dev/null"]
-    volumes:
-      - ./data:/data
-volumes:
-  data:

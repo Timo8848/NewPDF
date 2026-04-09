@@ -1,24 +1,22 @@
 from __future__ import annotations
 
-import io
 import tempfile
 import time
+from contextlib import asynccontextmanager
 from pathlib import Path
 from typing import List
 
-import orjson
 from fastapi import Depends, FastAPI, File, HTTPException, UploadFile
 from fastapi.responses import PlainTextResponse
-from pydantic import BaseModel
 from prometheus_client import generate_latest
+from pydantic import BaseModel
 
 from idp.config import Settings, get_settings
+from idp.postprocess.analytics import close_connection, init_schema
 from idp.services.pipeline import ExtractionPipeline
 from idp.utils.logging import configure_logging
 
 configure_logging()
-app = FastAPI(title="IDP Service", version="0.1.0")
-pipeline = ExtractionPipeline()
 
 
 class FieldPayload(BaseModel):
@@ -48,25 +46,42 @@ class HealthResponse(BaseModel):
 START_TIME = time.time()
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    init_schema()
+    app.state.pipeline = ExtractionPipeline()
+    try:
+        yield
+    finally:
+        close_connection()
+
+
+app = FastAPI(title="IDP Service", version="0.2.0", lifespan=lifespan)
+
+
 def get_service_settings() -> Settings:
     return get_settings()
 
 
 @app.post("/extract", response_model=ExtractionResponse)
 async def extract(file: UploadFile = File(...), settings: Settings = Depends(get_service_settings)):
-    if not file.filename.lower().endswith(".pdf"):
+    if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF uploads are supported")
     contents = await file.read()
-    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
-        tmp.write(contents)
-        tmp_path = Path(tmp.name)
+    tmp_path: Path | None = None
     try:
-        result = pipeline.extract(tmp_path)
+        with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+            tmp.write(contents)
+            tmp_path = Path(tmp.name)
+        result = app.state.pipeline.extract(tmp_path)
         return ExtractionResponse(**result)
-    except Exception as exc:  # pragma: no cover
+    except HTTPException:
+        raise
+    except Exception as exc:
         raise HTTPException(status_code=500, detail=str(exc)) from exc
     finally:
-        tmp_path.unlink(missing_ok=True)
+        if tmp_path is not None:
+            tmp_path.unlink(missing_ok=True)
 
 
 @app.get("/health", response_model=HealthResponse)
