@@ -27,7 +27,7 @@ class ValidationSummary:
 
 
 _REGEX_RULES = {
-    "invoice_number": r"^INV[\- ]?[0-9A-Za-z]+$",
+    "invoice_number": r"^[A-Za-z0-9][A-Za-z0-9\-]*$",
     "tax_id": r"^[0-9A-Za-z\-]{9,15}$",
     "routing_number": r"^[0-9]{9}$",
     "bank_account": r"^[0-9]{6,20}$",
